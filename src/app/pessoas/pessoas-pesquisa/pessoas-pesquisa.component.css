@@ -1,0 +1,12 @@
+.toggle-status {
+  text-decoration: none;
+
+}
+
+.toggle-status:hover, .toggle-status:focus {
+  text-decoration: underline;
+}
+
+form .p-button {
+  margin-right: .25em;
+}

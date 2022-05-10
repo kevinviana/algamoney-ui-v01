@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="grid">
+    <form (ngSubmit)="pesquisar()">
+    <div class="col-12">
+      <h1>Pessoas</h1>
+    </div>
+    <div class="col-12 p-fluid">
+      <label for="nome">Nome</label>
+      <input type="text" name="nome" pInputText [(ngModel)]="filtro.nome">
+    </div>
+    <div class="col-12">
+      <button type="submit" label="Pesquisar" pButton></button>
+    </div>
+    </form>
+  </div>
+  <div class="grid">
+    <div class="col-12">
+      <p-table styleClass="p-datatable-gridlines p-datatable-striped"
+      [value]="pessoas" [responsive]="true"
+      [paginator]="true" [rows]="5" [lazy]="true" [totalRecords]="totalRegistros"
+      (onLazyLoad)="aoMudarPagina($event)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Status</th>
+            <th class="col-acoes"></th>
+        </ng-template>
+        <ng-template pTemplate="body" let-pessoa>
+          <tr>
+            <td>
+              <span class="p-column-title">Nome</span>
+              {{pessoa.nome}}
+            </td>
+            <td>
+              <span class="p-column-title">Cidade</span>
+              {{pessoa.cidade}}
+            </td>
+            <td>
+              <span class="p-column-title">Estado</span>
+              {{pessoa.estado}}
+            </td>
+            <td>
+              <span class="p-column-title">Status</span>
+              <a class="toggle-status" href="javascript:;" [pTooltip]="pessoa.ativo?'Desativar':'Ativar'"
+                tooltipPosition="top">{{pessoa.ativo?'Ativo':'Inativo'}}</a>
+            </td>
+            <td class="col-acoes">
+              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="col-12">
+      <button type="submit" label="Nova Pessoa" pButton></button>
+    </div>
+  </div>
+</div>
