@@ -64,5 +64,20 @@ export class PessoasPesquisaComponent implements OnInit {
       .catch((err) => this.errorHandler.handle(err));
   }
 
+  status(pessoa: any) {
+    this.pessoaService
+      .status(pessoa.codigo, !pessoa.ativo)
+      .then(() => {
+        this.grid.reset();
+        this.messageService.add({
+          severity: 'success',
+          detail: `Pessoa ${
+            pessoa.ativo ? 'inativada' : 'ativada'
+          } com sucesso`,
+        });
+      })
+      .catch((err) => this.errorHandler.handle(err));
+  }
+
   ngOnInit(): void {}
 }

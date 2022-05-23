@@ -43,7 +43,7 @@
             <td>
               <span class="p-column-title">Status</span>
               <a class="toggle-status" href="javascript:;" [pTooltip]="pessoa.ativo?'Desativar':'Ativar'"
-                tooltipPosition="top">{{pessoa.ativo?'Ativo':'Inativo'}}</a>
+                tooltipPosition="top" (click)="status(pessoa)">{{pessoa.ativo?'Ativo':'Inativo'}}</a>
             </td>
             <td class="col-acoes">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>

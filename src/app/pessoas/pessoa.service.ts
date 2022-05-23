@@ -53,4 +53,16 @@ export class PessoaService {
       this.http.delete(`${this.url}/${codigo}`, { headers })
     );
   }
+
+  async status(codigo: number, status: boolean) {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return await lastValueFrom(
+      this.http.put(`${this.url}/${codigo}/ativo`, status, {
+        headers,
+      })
+    );
+  }
 }
