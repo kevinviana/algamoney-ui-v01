@@ -1,24 +1,23 @@
 <div class="container">
   <div class="grid">
     <form (ngSubmit)="pesquisar()">
-    <div class="col-12">
-      <h1>Pessoas</h1>
-    </div>
-    <div class="col-12 p-fluid">
-      <label for="nome">Nome</label>
-      <input type="text" name="nome" pInputText [(ngModel)]="filtro.nome">
-    </div>
-    <div class="col-12">
-      <button type="submit" label="Pesquisar" pButton></button>
-    </div>
+      <div class="col-12">
+        <h1>Pessoas</h1>
+      </div>
+      <div class="col-12 p-fluid">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" pInputText [(ngModel)]="filtro.nome">
+      </div>
+      <div class="col-12">
+        <button type="submit" label="Pesquisar" pButton></button>
+      </div>
     </form>
   </div>
   <div class="grid">
     <div class="col-12">
-      <p-table styleClass="p-datatable-gridlines p-datatable-striped"
-      [value]="pessoas" [responsive]="true"
-      [paginator]="true" [rows]="5" [lazy]="true" [totalRecords]="totalRegistros"
-      (onLazyLoad)="aoMudarPagina($event)">
+      <p-table styleClass="p-datatable-gridlines p-datatable-striped" [value]="pessoas" [responsive]="true"
+        [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
+         [totalRecords]="totalRegistros" #tabela>
         <ng-template pTemplate="header">
           <tr>
             <th>Nome</th>
@@ -48,14 +47,15 @@
             </td>
             <td class="col-acoes">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+                (click)="confirmarExclusao(pessoa)"></button>
             </td>
           </tr>
         </ng-template>
       </p-table>
     </div>
-    <div class="col-12">
-      <button type="submit" label="Nova Pessoa" pButton></button>
+    <div class=" col-12">
+                <button type="submit" label="Nova Pessoa" pButton></button>
     </div>
   </div>
 </div>

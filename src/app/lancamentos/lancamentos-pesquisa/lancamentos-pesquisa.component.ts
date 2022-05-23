@@ -1,4 +1,4 @@
-import { Component, ErrorHandler, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   ConfirmationService,
   LazyLoadEvent,

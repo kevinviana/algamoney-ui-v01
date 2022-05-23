@@ -17,6 +17,6 @@ export class ErrorHandlerService {
       console.log('Ocorreu um erro: ', errorResponse);
     }
 
-    this.messageService.add({ severity: 'error', sticky: true, detail: msg });
+    this.messageService.add({ severity: 'error', detail: msg });
   }
 }
