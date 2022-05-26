@@ -31,7 +31,7 @@ export class LancamentoCadastroComponent implements OnInit {
   pessoas = [];
   lancamento = new Lancamento();
 
-  carregarCategorias() {console.log(this.route.snapshot.params)
+  carregarCategorias() {console.log(this.route.snapshot.params['codigo'])
     return this.categoriaService
       .listarTodas()
       .then((categorias) => {
