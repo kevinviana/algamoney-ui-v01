@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { Pessoa } from '../core/model';
 
 export class PessoaFiltro {
   nome?: string;
@@ -64,5 +65,30 @@ export class PessoaService {
         headers,
       })
     );
+  }
+
+  async listarTodas() {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+    );
+
+    return await lastValueFrom(this.http.get(this.url, { headers })).then(
+      (res: any) =>
+        res['content'].map((p: any) => ({
+          codigo: p.codigo,
+          nome: p.nome,
+        }))
+    );
+  }
+
+  async add(pessoa: Pessoa) {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return await lastValueFrom(
+      this.http.post(this.url, pessoa, { headers })
+    ).then();
   }
 }
