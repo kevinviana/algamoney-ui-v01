@@ -16,7 +16,7 @@ export class CategoriaService {
       'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
     );
 
-    return await lastValueFrom(this.http.get(`${this.url}`)).then(
+    return await lastValueFrom(this.http.get(this.url, { headers })).then(
       (res: any) => res
     );
   }

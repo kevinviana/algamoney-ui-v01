@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { Lancamento } from '../core/model';
 
 export class LancamentoFiltro {
   descricao?: string;
@@ -69,5 +70,15 @@ export class LancamentoService {
     return await lastValueFrom(
       this.http.delete(`${this.url}/${codigo}`, { headers })
     );
+  }
+
+  async add(lancamento: Lancamento) {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return await lastValueFrom(
+      this.http.post(this.url, lancamento, { headers })
+    ).then();
   }
 }
