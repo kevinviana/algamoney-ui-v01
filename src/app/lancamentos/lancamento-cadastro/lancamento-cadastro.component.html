@@ -2,21 +2,22 @@
   <form #lancamentoForm="ngForm" (ngSubmit)="salvar(lancamentoForm)">
     <div class="grid">
       <div class="col-12">
-        <h1>Novo Lançamento</h1>
+        <h1>{{editando ? "Edição de" : "Novo"}} Lançamento</h1>
       </div>
       <div class="col-12">
         <p-selectButton name="tipos" [options]="tipos" [(ngModel)]="lancamento.tipo" #tipo></p-selectButton>
       </div>
       <div class="col-12 md:col-3 p-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy" [required]="true" name="dataVencimento" [(ngModel)]="lancamento.dataVencimento" #dataVencimento="ngModel"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [required]="true" name="vencimento"
+          [(ngModel)]='lancamento.dataVencimento' #dataVencimento="ngModel"></p-calendar>
         <app-message [control]="dataVencimento.control" [error]="'required'" [text]="'Informe uma data de vencimento'">
         </app-message>
       </div>
       <div class="col-12 md:col-3 p-fluid">
         <label>{{tipo.value=== 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
-        <p-calendar dateFormat="dd/mm/yy" name="dataVencimento" [(ngModel)]="lancamento.dataPagamento"
-          #dataVencimento="ngModel"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" name="pagamento" [(ngModel)]="lancamento.dataPagamento"
+          #dataPagamento="ngModel"></p-calendar>
       </div>
       <div class="col-12 md:col-9 p-fluid">
         <label>Descrição</label>
@@ -40,7 +41,8 @@
       </div>
       <div class="col-12 md:col-6 p-fluid">
         <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" [filter]="true" name="pessoa" placeholder="Selecione" [(ngModel)]="lancamento.pessoa.codigo" #pessoa>
+        <p-dropdown [options]="pessoas" [filter]="true" name="pessoa" placeholder="Selecione"
+          [(ngModel)]="lancamento.pessoa.codigo" #pessoa>
         </p-dropdown>
       </div>
       <div class="col-12 p-fluid">
