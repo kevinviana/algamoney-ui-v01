@@ -57,7 +57,7 @@
       <div class="col-12">
         <button pButton type="submit" label="Salvar" [disabled]="pessoaForm.invalid"></button>
         <button pButton type="button" class="p-button-info" label="Novo"></button>
-        <a class="return" href="javascript:;">Voltar para a pesquisa</a>
+        <a class="return" [routerLink]="['/pessoas']">Voltar para a pesquisa</a>
       </div>
     </div>
   </form>

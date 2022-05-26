@@ -17,7 +17,7 @@
     <div class="col-12">
       <p-table styleClass="p-datatable-gridlines p-datatable-striped" [value]="pessoas" [responsive]="true"
         [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true" (onLazyLoad)="aoMudarPagina($event)"
-         [totalRecords]="totalRegistros" #tabela>
+        [totalRecords]="totalRegistros" #tabela>
         <ng-template pTemplate="header">
           <tr>
             <th>Nome</th>
@@ -46,7 +46,8 @@
                 tooltipPosition="top" (click)="status(pessoa)">{{pessoa.ativo?'Ativo':'Inativo'}}</a>
             </td>
             <td class="col-acoes">
-              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
+                [routerLink]="['/pessoa', pessoa.codigo]"></a>
               <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
                 (click)="confirmarExclusao(pessoa)"></button>
             </td>
@@ -55,7 +56,7 @@
       </p-table>
     </div>
     <div class=" col-12">
-                <button type="submit" label="Nova Pessoa" pButton></button>
+      <button type="submit" label="Nova Pessoa" pButton [routerLink]="['/pessoa/novo']"></button>
     </div>
   </div>
 </div>

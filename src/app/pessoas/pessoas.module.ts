@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputMaskModule } from 'primeng/inputmask';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     ButtonModule,
     InputMaskModule,
     SharedModule,
+    RouterModule
   ],
 })
 export class PessoasModule {}
