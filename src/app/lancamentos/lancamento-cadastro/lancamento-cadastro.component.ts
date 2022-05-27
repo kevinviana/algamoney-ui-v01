@@ -54,8 +54,15 @@ export class LancamentoCadastroComponent implements OnInit {
       })
       .catch((erro) => this.errorHandler.handle(erro));
   }
-
   salvar(lancamentoForm: NgForm): void {
+    if (this.editando) {
+      this.atualizarLancamento(lancamentoForm);
+    } else {
+      this.adicionarLancamento(lancamentoForm);
+    }
+  }
+
+  adicionarLancamento(lancamentoForm: NgForm): void {
     this.lancamentoService
       .add(this.lancamento)
       .then(() => {
@@ -69,18 +76,31 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch((erro) => this.errorHandler.handle(erro));
   }
 
+  atualizarLancamento(lancamentoForm: NgForm): void {
+    this.lancamentoService
+      .atualizar(this.lancamento)
+      .then((lancamento) => {
+        this.lancamento = lancamento;
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Lancamento alterado com sucesso',
+        });
+      })
+      .catch((erro) => this.errorHandler.handle(erro));
+  }
+
   carregarLancamento(codigo: number) {
     this.lancamentoService
       .buscarPorCodigo(codigo)
       .then((lancamento) => {
         this.lancamento = lancamento;
-        console.log(lancamento.dataVencimento)
+        console.log(lancamento.dataVencimento);
       })
       .catch((erro) => this.errorHandler.handle(erro));
   }
 
   get editando() {
-    return Boolean (this.lancamento.codigo)
+    return Boolean(this.lancamento.codigo);
   }
 
   ngOnInit(): void {

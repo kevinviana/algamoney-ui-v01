@@ -89,7 +89,10 @@ export class LancamentoService {
 
     return await lastValueFrom(
       this.http.put(`${this.url}/${lancamento.codigo}`, lancamento, { headers })
-    ).then((res: any) => ['content']);
+    ).then((res: any) => {
+      this.converterStringsParaDatas([res]);
+      return res;
+    });
   }
 
   async buscarPorCodigo(codigo: number) {
