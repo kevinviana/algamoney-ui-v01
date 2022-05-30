@@ -7,21 +7,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
+import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
-import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
+import { PessoasModule } from './pessoas/pessoas.module';
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadastro.component';
 
 const routes: Routes = [
-  { path:'', redirectTo: 'lancamentos', pathMatch:'full'},
-  { path:'lancamentos', component: LancamentosPesquisaComponent },
-  { path:'lancamentos/novo', component: LancamentoCadastroComponent },
-  { path:'lancamentos/:codigo', component: LancamentoCadastroComponent },
-  { path:'pessoas', component: PessoasPesquisaComponent },
-  { path:'pessoa/novo', component: PessoaCadastroComponent },
-  { path:'pessoa/:codigo', component: PessoaCadastroComponent }
+  { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
+  { path: 'lancamentos', component: LancamentosPesquisaComponent },
+  { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
+  { path: 'lancamentos/:codigo', component: LancamentoCadastroComponent },
+  { path: 'pessoas', component: PessoasPesquisaComponent },
+  { path: 'pessoa/novo', component: PessoaCadastroComponent },
+  { path: 'pessoa/:codigo', component: PessoaCadastroComponent },
+  { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
+  { path: '**', redirectTo: 'pagina-nao-encontrada' },
 ];
 
 @NgModule({

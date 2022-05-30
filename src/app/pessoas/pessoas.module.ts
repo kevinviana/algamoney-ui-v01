@@ -19,7 +19,7 @@ import { RouterModule } from '@angular/router';
     PessoaCadastroComponent,
     PessoasPesquisaComponent,
   ],
-  exports: [PessoaCadastroComponent, PessoasPesquisaComponent],
+  exports: [],
   imports: [
     CommonModule,
     FormsModule,

@@ -24,7 +24,7 @@ import { RouterModule } from '@angular/router';
     LancamentosPesquisaComponent,
     LancamentoCadastroComponent,
   ],
-  exports: [LancamentosPesquisaComponent, LancamentoCadastroComponent],
+  exports: [],
   imports: [
     CommonModule,
     InputTextModule,
