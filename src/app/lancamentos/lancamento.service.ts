@@ -79,7 +79,10 @@ export class LancamentoService {
 
     return await lastValueFrom(
       this.http.post(this.url, lancamento, { headers })
-    ).then();
+    ).then((res: any) => {
+      this.converterStringsParaDatas([res]);
+      return res;
+    });
   }
 
   async atualizar(lancamento: Lancamento) {
