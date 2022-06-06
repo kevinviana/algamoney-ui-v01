@@ -70,6 +70,6 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.setTitle("Pesquisa de Lançamentos")
+    this.title.setTitle("Pesquisa de Lançamentos");
   }
 }
