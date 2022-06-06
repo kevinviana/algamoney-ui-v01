@@ -17,7 +17,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { RouterModule } from '@angular/router';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { RouterModule } from '@angular/router';
     InputNumberModule,
     SharedModule,
     HttpClientModule,
-    RouterModule
+    LancamentosRoutingModule
   ],
 })
 export class LancamentosModule {}
