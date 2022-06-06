@@ -88,7 +88,7 @@ export class LancamentoService {
   async atualizar(lancamento: Lancamento) {
     const headers = new HttpHeaders()
       .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'aplication/json');
+      .append('Content-Type', 'application/json');
 
     return await lastValueFrom(
       this.http.put(`${this.url}/${lancamento.codigo}`, lancamento, { headers })
