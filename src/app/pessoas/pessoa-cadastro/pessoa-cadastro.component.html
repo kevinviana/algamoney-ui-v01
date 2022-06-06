@@ -2,7 +2,7 @@
   <form #pessoaForm="ngForm" (ngSubmit)="salvar(pessoaForm)">
     <div class="grid">
       <div class="col-12">
-        <h1>Nova Pessoa</h1>
+        <h1>{{editando? 'Edição de': 'Nova'}} Pessoa</h1>
       </div>
       <div class="col-12 p-fluid">
         <label>Nome</label>
@@ -56,7 +56,7 @@
       </div>
       <div class="col-12">
         <button pButton type="submit" label="Salvar" [disabled]="pessoaForm.invalid"></button>
-        <button pButton type="button" class="p-button-info" label="Novo"></button>
+        <button pButton type="button" class="p-button-info" label="Novo" (click)="novo(pessoaForm)"></button>
         <a class="return" [routerLink]="['/pessoas']">Voltar para a pesquisa</a>
       </div>
     </div>

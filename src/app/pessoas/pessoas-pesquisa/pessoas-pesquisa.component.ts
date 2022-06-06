@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import {
   ConfirmationService,
   LazyLoadEvent,
@@ -18,7 +19,8 @@ export class PessoasPesquisaComponent implements OnInit {
     private pessoaService: PessoaService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private title: Title
   ) {}
 
   pessoas = [];
@@ -79,5 +81,7 @@ export class PessoasPesquisaComponent implements OnInit {
       .catch((err) => this.errorHandler.handle(err));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.title.setTitle('Pesquisa de Pessoas');
+  }
 }

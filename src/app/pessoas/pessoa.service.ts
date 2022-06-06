@@ -89,6 +89,27 @@ export class PessoaService {
 
     return await lastValueFrom(
       this.http.post(this.url, pessoa, { headers })
-    ).then();
+    ).then((res: any) => res);
+  }
+
+  async buscarPorCodigo(codigo: number) {
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+    );
+
+    return await lastValueFrom(
+      this.http.get(`${this.url}/${codigo}`, { headers })
+    ).then((res: any) => res);
+  }
+
+  async atualizar(pessoa: Pessoa) {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return await lastValueFrom(
+      this.http.put(`${this.url}/${pessoa.codigo}`, pessoa, { headers })
+    ).then((res: any) => res);
   }
 }
