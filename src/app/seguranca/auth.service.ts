@@ -14,7 +14,7 @@ export class AuthService {
   url = 'http://localhost:8080/oauth/token';
   jwtPayload: any;
 
-  async login(usuario: string, senha: string) {
+  async login(usuario: string, senha: string): Promise<void> {
     const headers = new HttpHeaders()
       .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==')
       .append('Content-Type', 'application/x-www-form-urlencoded');
@@ -24,8 +24,13 @@ export class AuthService {
       .then((res: any) => {
         this.storeToken(res.access_token);
       })
-      .catch((erro) => {
-        console.log(erro);
+      .catch((res): any => {
+        if (res.status === 400) {
+          if (res.error.error == 'invalid_grant') {
+            return Promise.reject('Usuário ou senha inválida');
+          }
+        }
+        return Promise.reject(res);
       });
   }
 
