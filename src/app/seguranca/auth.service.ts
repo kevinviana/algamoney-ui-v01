@@ -20,7 +20,9 @@ export class AuthService {
       .append('Content-Type', 'application/x-www-form-urlencoded');
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    return await lastValueFrom(this.http.post(this.url, body, { headers, withCredentials: true }))
+    return await lastValueFrom(
+      this.http.post(this.url, body, { headers, withCredentials: true })
+    )
       .then((res: any) => {
         this.storeToken(res.access_token);
       })
@@ -50,6 +52,12 @@ export class AuthService {
       .catch((erro: any) => {
         console.error('Erro ao renovar token!!!', erro);
       });
+  }
+
+  isAccessTokenInvalid() {
+    const token = localStorage.getItem('token');
+
+    return !token || this.jwtHelper.isTokenExpired(token);
   }
 
   hasAuthority(authority: string) {
