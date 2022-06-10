@@ -8,7 +8,7 @@
     </div>
   </div>
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
-    <li class="navbar-user">Seu Zé</li>
+    <li class="navbar-user">{{ usuarioLogado }}</li>
     <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
     <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/pessoas">Pessoas</a></li>
     <li class="navbar-menuitem"><a href="#">Logout</a></li>
