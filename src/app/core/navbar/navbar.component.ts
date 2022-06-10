@@ -12,8 +12,12 @@ export class NavbarComponent implements OnInit {
 
   constructor(private auth: AuthService) {}
 
-  hasAuthority(authority: string){
+  temPermissao(authority: string){
     return this.auth.hasAuthority(authority);
+  }
+
+  obterNovoAccessToken(){
+    this.auth.getNewAccessToken();
   }
 
   ngOnInit(): void {

@@ -4,13 +4,15 @@
       <div class="col-12">
         <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu"><i
             class="pi pi-bars"></i></a>
+        <button type="button" (click)="obterNovoAccessToken();">Novo AceessToken</button>
       </div>
     </div>
   </div>
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
     <li class="navbar-user">{{ usuarioLogado }}</li>
-    <li *ngIf="hasAuthority('ROLE_PESQUISAR_LANCAMENTO')" class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
-    <li *ngIf="hasAuthority('ROLE_PESQUISAR_PESSOA')" class="navbar-menuitem" routerLinkActive="ativo"><a
+    <li *ngIf="temPermissao('ROLE_PESQUISAR_LANCAMENTO')" class="navbar-menuitem" routerLinkActive="ativo"><a
+        routerLink="/lancamentos">Lançamentos</a></li>
+    <li *ngIf="temPermissao('ROLE_PESQUISAR_PESSOA')" class="navbar-menuitem" routerLinkActive="ativo"><a
         routerLink="/pessoas">Pessoas</a></li>
     <li class="navbar-menuitem"><a href="#">Logout</a></li>
   </ul>
