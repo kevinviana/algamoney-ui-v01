@@ -19,10 +19,6 @@ export class PessoaService {
 
   async pesquisar(filtro: PessoaFiltro) {
     let params = new HttpParams();
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-    );
 
     params = params.set('page', filtro.pagina);
     params = params.set('size', filtro.itensPorPagina);
@@ -31,85 +27,53 @@ export class PessoaService {
       params = params.set('nome', filtro.nome);
     }
 
-    return await lastValueFrom(
-      this.http.get(this.url, { params, headers })
-    ).then((res: any) => {
-      const pessoas = res['content'];
-      const result = {
-        pessoas,
-        total: res.totalElements,
-      };
+    return await lastValueFrom(this.http.get(this.url, { params })).then(
+      (res: any) => {
+        const pessoas = res['content'];
+        const result = {
+          pessoas,
+          total: res.totalElements,
+        };
 
-      return result;
-    });
+        return result;
+      }
+    );
   }
 
   async excluir(codigo: number) {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-    );
-
-    return await lastValueFrom(
-      this.http.delete(`${this.url}/${codigo}`, { headers })
-    );
+    return await lastValueFrom(this.http.delete(`${this.url}/${codigo}`));
   }
 
   async status(codigo: number, status: boolean) {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
     return await lastValueFrom(
-      this.http.put(`${this.url}/${codigo}/ativo`, status, {
-        headers,
-      })
+      this.http.put(`${this.url}/${codigo}/ativo`, status)
     );
   }
 
   async listarTodas() {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-    );
-
-    return await lastValueFrom(this.http.get(this.url, { headers })).then(
-      (res: any) =>
-        res['content'].map((p: any) => ({
-          codigo: p.codigo,
-          nome: p.nome,
-        }))
+    return await lastValueFrom(this.http.get(this.url)).then((res: any) =>
+      res['content'].map((p: any) => ({
+        codigo: p.codigo,
+        nome: p.nome,
+      }))
     );
   }
 
   async add(pessoa: Pessoa) {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
-    return await lastValueFrom(
-      this.http.post(this.url, pessoa, { headers })
-    ).then((res: any) => res);
+    return await lastValueFrom(this.http.post(this.url, pessoa)).then(
+      (res: any) => res
+    );
   }
 
   async buscarPorCodigo(codigo: number) {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+    return await lastValueFrom(this.http.get(`${this.url}/${codigo}`)).then(
+      (res: any) => res
     );
-
-    return await lastValueFrom(
-      this.http.get(`${this.url}/${codigo}`, { headers })
-    ).then((res: any) => res);
   }
 
   async atualizar(pessoa: Pessoa) {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
     return await lastValueFrom(
-      this.http.put(`${this.url}/${pessoa.codigo}`, pessoa, { headers })
+      this.http.put(`${this.url}/${pessoa.codigo}`, pessoa)
     ).then((res: any) => res);
   }
 }

@@ -11,13 +11,6 @@ export class CategoriaService {
   url = 'http://localhost:8080/categorias';
 
   async listarTodas() {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-    );
-
-    return await lastValueFrom(this.http.get(this.url, { headers })).then(
-      (res: any) => res
-    );
+    return await lastValueFrom(this.http.get(this.url)).then((res: any) => res);
   }
 }

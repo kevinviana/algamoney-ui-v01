@@ -22,10 +22,6 @@ export class LancamentoService {
 
   async pesquisar(filtro: LancamentoFiltro) {
     let params = new HttpParams();
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-    );
 
     params = params.set('page', filtro.pagina);
     params = params.set('size', filtro.itensPorPagina);
@@ -49,7 +45,7 @@ export class LancamentoService {
     }
 
     return await lastValueFrom(
-      this.http.get(`${this.url}?resumo`, { headers, params })
+      this.http.get(`${this.url}?resumo`, { params })
     ).then((res: any) => {
       const lancamentos = res['content'];
       const result = {
@@ -62,36 +58,21 @@ export class LancamentoService {
   }
 
   async excluir(codigo: number) {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
-    );
-
-    return await lastValueFrom(
-      this.http.delete(`${this.url}/${codigo}`, { headers })
-    );
+    return await lastValueFrom(this.http.delete(`${this.url}/${codigo}`));
   }
 
   async add(lancamento: Lancamento) {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
-    return await lastValueFrom(
-      this.http.post(this.url, lancamento, { headers })
-    ).then((res: any) => {
-      this.converterStringsParaDatas([res]);
-      return res;
-    });
+    return await lastValueFrom(this.http.post(this.url, lancamento)).then(
+      (res: any) => {
+        this.converterStringsParaDatas([res]);
+        return res;
+      }
+    );
   }
 
   async atualizar(lancamento: Lancamento) {
-    const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-      .append('Content-Type', 'application/json');
-
     return await lastValueFrom(
-      this.http.put(`${this.url}/${lancamento.codigo}`, lancamento, { headers })
+      this.http.put(`${this.url}/${lancamento.codigo}`, lancamento)
     ).then((res: any) => {
       this.converterStringsParaDatas([res]);
       return res;
@@ -99,17 +80,12 @@ export class LancamentoService {
   }
 
   async buscarPorCodigo(codigo: number) {
-    const headers = new HttpHeaders().append(
-      'Authorization',
-      'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg=='
+    return await lastValueFrom(this.http.get(`${this.url}/${codigo}`)).then(
+      (res: any) => {
+        this.converterStringsParaDatas([res]);
+        return res;
+      }
     );
-
-    return await lastValueFrom(
-      this.http.get(`${this.url}/${codigo}`, { headers })
-    ).then((res: any) => {
-      this.converterStringsParaDatas([res]);
-      return res;
-    });
   }
 
   private converterStringsParaDatas(lancamentos: any[]) {
