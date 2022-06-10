@@ -12,6 +12,10 @@ export class NavbarComponent implements OnInit {
 
   constructor(private auth: AuthService) {}
 
+  hasAuthority(authority: string){
+    return this.auth.hasAuthority(authority);
+  }
+
   ngOnInit(): void {
     this.usuarioLogado = this.auth.jwtPayload?.nome;
   }

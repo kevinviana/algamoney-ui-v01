@@ -34,6 +34,10 @@ export class AuthService {
       });
   }
 
+  hasAuthority(authority: string) {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(authority);
+  }
+
   private storeToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
     localStorage.setItem('token', token);
