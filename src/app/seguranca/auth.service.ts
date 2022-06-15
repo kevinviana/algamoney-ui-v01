@@ -64,6 +64,15 @@ export class AuthService {
     return this.jwtPayload && this.jwtPayload.authorities.includes(authority);
   }
 
+  hasAnyAuthority(authorities: string[]): boolean {
+    for (const authority of authorities) {
+      if(this.hasAuthority(authority)){
+        return true;
+      }
+    }
+    return false;
+  }
+
   private storeToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
     localStorage.setItem('token', token);

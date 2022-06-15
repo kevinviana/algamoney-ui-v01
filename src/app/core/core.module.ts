@@ -1,6 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 import localePt from '@angular/common/locales/pt';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,9 +17,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 import { NavbarComponent } from './navbar/navbar.component';
-import { ErrorHandlerService } from './error-handler.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
-import { Title } from '@angular/platform-browser';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
+
+import { ErrorHandlerService } from './error-handler.service';
 import { AuthService } from '../seguranca/auth.service';
 
 registerLocaleData(localePt, 'pt-BR');
@@ -28,7 +30,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
+  declarations: [NavbarComponent, PaginaNaoEncontradaComponent, NaoAutorizadoComponent],
   imports: [
     CommonModule,
     RouterModule,
