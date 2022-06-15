@@ -7,6 +7,7 @@ import {
 } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { AuthService } from 'src/app/seguranca/auth.service';
 import { LancamentoFiltro, LancamentoService } from '../lancamento.service';
 
 @Component({
@@ -20,13 +21,18 @@ export class LancamentosPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmation: ConfirmationService,
     private errorHandler: ErrorHandlerService,
-    private title: Title
+    private title: Title,
+    private auth: AuthService
   ) {}
 
   lancamentos: Object[] = [];
   filtro = new LancamentoFiltro();
   totalRegistros = 0;
   @ViewChild('tabela') grid!: Table;
+
+  temPermissao(authority: string) {
+    return this.auth.hasAuthority(authority);
+  }
 
   aoMudarPagina(event: LazyLoadEvent): void {
     let pagina = 0;
@@ -70,6 +76,6 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.setTitle("Pesquisa de Lançamentos");
+    this.title.setTitle('Pesquisa de Lançamentos');
   }
 }
