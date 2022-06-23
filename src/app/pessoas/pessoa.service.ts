@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Pessoa } from '../core/model';
 
 export class PessoaFiltro {
@@ -13,9 +14,11 @@ export class PessoaFiltro {
   providedIn: 'root',
 })
 export class PessoaService {
-  constructor(private http: HttpClient) {}
+  pessoasUrl: string = '';
 
-  pessoasUrl = 'http://localhost:8080/pessoas';
+  constructor(private http: HttpClient) {
+    this.pessoasUrl = `${environment.apiUrl}/pessoas`
+  }
 
   async pesquisar(filtro: PessoaFiltro) {
     let params = new HttpParams();
@@ -41,7 +44,9 @@ export class PessoaService {
   }
 
   async excluir(codigo: number) {
-    return await lastValueFrom(this.http.delete(`${this.pessoasUrl}/${codigo}`));
+    return await lastValueFrom(
+      this.http.delete(`${this.pessoasUrl}/${codigo}`)
+    );
   }
 
   async status(codigo: number, status: boolean) {
@@ -51,11 +56,12 @@ export class PessoaService {
   }
 
   async listarTodas() {
-    return await lastValueFrom(this.http.get(this.pessoasUrl)).then((res: any) =>
-      res['content'].map((p: any) => ({
-        codigo: p.codigo,
-        nome: p.nome,
-      }))
+    return await lastValueFrom(this.http.get(this.pessoasUrl)).then(
+      (res: any) =>
+        res['content'].map((p: any) => ({
+          codigo: p.codigo,
+          nome: p.nome,
+        }))
     );
   }
 
@@ -66,9 +72,9 @@ export class PessoaService {
   }
 
   async buscarPorCodigo(codigo: number) {
-    return await lastValueFrom(this.http.get(`${this.pessoasUrl}/${codigo}`)).then(
-      (res: any) => res
-    );
+    return await lastValueFrom(
+      this.http.get(`${this.pessoasUrl}/${codigo}`)
+    ).then((res: any) => res);
   }
 
   async atualizar(pessoa: Pessoa) {

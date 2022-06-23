@@ -2,17 +2,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  oauthTokenUrl: string = '';
+  revokeUrl: string = '';
+
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.loadToken();
+    this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
+    this.revokeUrl = `${environment.apiUrl}/tokens/revoke`;
   }
 
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
-  revokeUrl = 'http://localhost:8080/tokens/revokeUrl';
   jwtPayload: any;
 
   async login(usuario: string, senha: string): Promise<void> {
@@ -22,7 +26,10 @@ export class AuthService {
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
     return await lastValueFrom(
-      this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
+      this.http.post(this.oauthTokenUrl, body, {
+        headers,
+        withCredentials: true,
+      })
     )
       .then((res: any) => {
         this.storeToken(res.access_token);
@@ -52,7 +59,10 @@ export class AuthService {
     const body = 'grant_type=refresh_token';
 
     return await lastValueFrom(
-      this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
+      this.http.post(this.oauthTokenUrl, body, {
+        headers,
+        withCredentials: true,
+      })
     )
       .then((res: any) => {
         this.storeToken(res.access_token);

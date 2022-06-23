@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { Lancamento } from '../core/model';
+import { environment } from 'src/environments/environment';
 
 export class LancamentoFiltro {
   descricao?: string;
@@ -16,9 +17,11 @@ export class LancamentoFiltro {
   providedIn: 'root',
 })
 export class LancamentoService {
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  lancamentosUrl: string = '';
 
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  constructor(private http: HttpClient, private datePipe: DatePipe) {
+    this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
+  }
 
   async pesquisar(filtro: LancamentoFiltro) {
     let params = new HttpParams();
@@ -58,16 +61,18 @@ export class LancamentoService {
   }
 
   async excluir(codigo: number) {
-    return await lastValueFrom(this.http.delete(`${this.lancamentosUrl}/${codigo}`));
+    return await lastValueFrom(
+      this.http.delete(`${this.lancamentosUrl}/${codigo}`)
+    );
   }
 
   async add(lancamento: Lancamento) {
-    return await lastValueFrom(this.http.post(this.lancamentosUrl, lancamento)).then(
-      (res: any) => {
-        this.converterStringsParaDatas([res]);
-        return res;
-      }
-    );
+    return await lastValueFrom(
+      this.http.post(this.lancamentosUrl, lancamento)
+    ).then((res: any) => {
+      this.converterStringsParaDatas([res]);
+      return res;
+    });
   }
 
   async atualizar(lancamento: Lancamento) {
@@ -80,12 +85,12 @@ export class LancamentoService {
   }
 
   async buscarPorCodigo(codigo: number) {
-    return await lastValueFrom(this.http.get(`${this.lancamentosUrl}/${codigo}`)).then(
-      (res: any) => {
-        this.converterStringsParaDatas([res]);
-        return res;
-      }
-    );
+    return await lastValueFrom(
+      this.http.get(`${this.lancamentosUrl}/${codigo}`)
+    ).then((res: any) => {
+      this.converterStringsParaDatas([res]);
+      return res;
+    });
   }
 
   private converterStringsParaDatas(lancamentos: any[]) {
