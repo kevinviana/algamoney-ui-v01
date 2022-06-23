@@ -1,16 +1,21 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriaService {
-  constructor(private http: HttpClient) {}
+  categoriasUrl: string = '';
 
-  categoriasUrl = 'http://localhost:8080/categorias';
+  constructor(private http: HttpClient) {
+    this.categoriasUrl = `${environment.apiUrl}/categorias`;
+  }
 
   async listarTodas() {
-    return await lastValueFrom(this.http.get(this.categoriasUrl)).then((res: any) => res);
+    return await lastValueFrom(this.http.get(this.categoriasUrl)).then(
+      (res: any) => res
+    );
   }
 }
