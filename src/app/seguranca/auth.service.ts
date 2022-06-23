@@ -36,6 +36,14 @@ export class AuthService {
       });
   }
 
+  async logout() {
+    return await lastValueFrom(
+      this.http.delete(this.revokeUrl, { withCredentials: true })
+    ).then(() => {
+      this.cleanToken();
+    });
+  }
+
   async getNewAccessToken(): Promise<void> {
     const headers = new HttpHeaders()
       .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==')
@@ -71,6 +79,11 @@ export class AuthService {
       }
     }
     return false;
+  }
+
+  private cleanToken() {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
   }
 
   private storeToken(token: string) {

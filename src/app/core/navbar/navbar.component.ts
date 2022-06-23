@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/seguranca/auth.service';
+import { ErrorHandlerService } from '../error-handler.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +12,23 @@ export class NavbarComponent implements OnInit {
   exibindoMenu: boolean = false;
   usuarioLogado: string = '';
 
-  constructor(private auth: AuthService) {}
+  constructor(
+    private auth: AuthService,
+    private errorHandler: ErrorHandlerService,
+    private router: Router
+  ) {}
 
-  temPermissao(authority: string){
+  temPermissao(authority: string) {
     return this.auth.hasAuthority(authority);
+  }
+
+  logout() {
+    this.auth
+      .logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => this.errorHandler.handle(error));
   }
 
   ngOnInit(): void {
