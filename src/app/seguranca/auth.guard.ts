@@ -13,8 +13,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
-  constructor(private auth: AuthService, private router: Router){}
+  constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -24,8 +23,24 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (route.data['roles'] && !this.auth.hasAnyAuthority(route.data['roles'])) {
-      this.router.navigate(['/nao-autorizado'])
+    if (this.auth.isAccessTokenInvalid()) {
+      console.log(
+        'Navegando com access token inválido: obtendo novo access token...'
+      );
+
+      return this.auth.getNewAccessToken().then(() => {
+        if (this.auth.isAccessTokenInvalid()) {
+          this.router.navigate(['/login']);
+          return false;
+        }
+
+        return true;
+      });
+    } else if (
+      route.data['roles'] &&
+      !this.auth.hasAnyAuthority(route.data['roles'])
+    ) {
+      this.router.navigate(['/nao-autorizado']);
       return false;
     }
     return true;
