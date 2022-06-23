@@ -16,10 +16,6 @@ export class NavbarComponent implements OnInit {
     return this.auth.hasAuthority(authority);
   }
 
-  obterNovoAccessToken(){
-    this.auth.getNewAccessToken();
-  }
-
   ngOnInit(): void {
     this.usuarioLogado = this.auth.jwtPayload?.nome;
   }

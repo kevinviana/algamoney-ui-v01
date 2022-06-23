@@ -47,7 +47,7 @@ export class AuthService {
     )
       .then((res: any) => {
         this.storeToken(res.access_token);
-        console.info('Novo Access Token obtido!');
+        console.log('Novo Access Token obtido!');
       })
       .catch((erro: any) => {
         console.error('Erro ao renovar token!!!', erro);

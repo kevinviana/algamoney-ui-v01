@@ -1,7 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { AuthService } from "./auth.service";
-import { from, mergeMap, Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { from, mergeMap, Observable } from 'rxjs';
+
+export class NotAuthenticatedError {}
 
 @Injectable()
 export class MoneyHttpInterceptor implements HttpInterceptor {
@@ -11,12 +18,13 @@ export class MoneyHttpInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (
-      !req.url.includes('/oauth/token') &&
-      this.auth.isAccessTokenInvalid()
-    ) {
+    if (!req.url.includes('/oauth/token') && this.auth.isAccessTokenInvalid()) {
       return from(this.auth.getNewAccessToken()).pipe(
         mergeMap(() => {
+          if (this.auth.isAccessTokenInvalid()) {
+            throw new NotAuthenticatedError();
+          }
+
           req = req.clone({
             setHeaders: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
