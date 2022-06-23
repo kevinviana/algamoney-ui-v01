@@ -8,9 +8,9 @@ import { lastValueFrom } from 'rxjs';
 export class CategoriaService {
   constructor(private http: HttpClient) {}
 
-  url = 'http://localhost:8080/categorias';
+  categoriasUrl = 'http://localhost:8080/categorias';
 
   async listarTodas() {
-    return await lastValueFrom(this.http.get(this.url)).then((res: any) => res);
+    return await lastValueFrom(this.http.get(this.categoriasUrl)).then((res: any) => res);
   }
 }

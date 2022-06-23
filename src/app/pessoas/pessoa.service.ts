@@ -15,7 +15,7 @@ export class PessoaFiltro {
 export class PessoaService {
   constructor(private http: HttpClient) {}
 
-  url = 'http://localhost:8080/pessoas';
+  pessoasUrl = 'http://localhost:8080/pessoas';
 
   async pesquisar(filtro: PessoaFiltro) {
     let params = new HttpParams();
@@ -27,7 +27,7 @@ export class PessoaService {
       params = params.set('nome', filtro.nome);
     }
 
-    return await lastValueFrom(this.http.get(this.url, { params })).then(
+    return await lastValueFrom(this.http.get(this.pessoasUrl, { params })).then(
       (res: any) => {
         const pessoas = res['content'];
         const result = {
@@ -41,17 +41,17 @@ export class PessoaService {
   }
 
   async excluir(codigo: number) {
-    return await lastValueFrom(this.http.delete(`${this.url}/${codigo}`));
+    return await lastValueFrom(this.http.delete(`${this.pessoasUrl}/${codigo}`));
   }
 
   async status(codigo: number, status: boolean) {
     return await lastValueFrom(
-      this.http.put(`${this.url}/${codigo}/ativo`, status)
+      this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, status)
     );
   }
 
   async listarTodas() {
-    return await lastValueFrom(this.http.get(this.url)).then((res: any) =>
+    return await lastValueFrom(this.http.get(this.pessoasUrl)).then((res: any) =>
       res['content'].map((p: any) => ({
         codigo: p.codigo,
         nome: p.nome,
@@ -60,20 +60,20 @@ export class PessoaService {
   }
 
   async add(pessoa: Pessoa) {
-    return await lastValueFrom(this.http.post(this.url, pessoa)).then(
+    return await lastValueFrom(this.http.post(this.pessoasUrl, pessoa)).then(
       (res: any) => res
     );
   }
 
   async buscarPorCodigo(codigo: number) {
-    return await lastValueFrom(this.http.get(`${this.url}/${codigo}`)).then(
+    return await lastValueFrom(this.http.get(`${this.pessoasUrl}/${codigo}`)).then(
       (res: any) => res
     );
   }
 
   async atualizar(pessoa: Pessoa) {
     return await lastValueFrom(
-      this.http.put(`${this.url}/${pessoa.codigo}`, pessoa)
+      this.http.put(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
     ).then((res: any) => res);
   }
 }

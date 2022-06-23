@@ -11,7 +11,8 @@ export class AuthService {
     this.loadToken();
   }
 
-  url = 'http://localhost:8080/oauth/token';
+  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  revokeUrl = 'http://localhost:8080/tokens/revokeUrl';
   jwtPayload: any;
 
   async login(usuario: string, senha: string): Promise<void> {
@@ -21,7 +22,7 @@ export class AuthService {
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
     return await lastValueFrom(
-      this.http.post(this.url, body, { headers, withCredentials: true })
+      this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
     )
       .then((res: any) => {
         this.storeToken(res.access_token);
@@ -51,7 +52,7 @@ export class AuthService {
     const body = 'grant_type=refresh_token';
 
     return await lastValueFrom(
-      this.http.post(this.url, body, { headers, withCredentials: true })
+      this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
     )
       .then((res: any) => {
         this.storeToken(res.access_token);
@@ -74,7 +75,7 @@ export class AuthService {
 
   hasAnyAuthority(authorities: string[]): boolean {
     for (const authority of authorities) {
-      if(this.hasAuthority(authority)){
+      if (this.hasAuthority(authority)) {
         return true;
       }
     }

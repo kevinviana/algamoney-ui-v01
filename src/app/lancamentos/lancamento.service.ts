@@ -18,7 +18,7 @@ export class LancamentoFiltro {
 export class LancamentoService {
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
-  url = 'http://localhost:8080/lancamentos';
+  lancamentosUrl = 'http://localhost:8080/lancamentos';
 
   async pesquisar(filtro: LancamentoFiltro) {
     let params = new HttpParams();
@@ -45,7 +45,7 @@ export class LancamentoService {
     }
 
     return await lastValueFrom(
-      this.http.get(`${this.url}?resumo`, { params })
+      this.http.get(`${this.lancamentosUrl}?resumo`, { params })
     ).then((res: any) => {
       const lancamentos = res['content'];
       const result = {
@@ -58,11 +58,11 @@ export class LancamentoService {
   }
 
   async excluir(codigo: number) {
-    return await lastValueFrom(this.http.delete(`${this.url}/${codigo}`));
+    return await lastValueFrom(this.http.delete(`${this.lancamentosUrl}/${codigo}`));
   }
 
   async add(lancamento: Lancamento) {
-    return await lastValueFrom(this.http.post(this.url, lancamento)).then(
+    return await lastValueFrom(this.http.post(this.lancamentosUrl, lancamento)).then(
       (res: any) => {
         this.converterStringsParaDatas([res]);
         return res;
@@ -72,7 +72,7 @@ export class LancamentoService {
 
   async atualizar(lancamento: Lancamento) {
     return await lastValueFrom(
-      this.http.put(`${this.url}/${lancamento.codigo}`, lancamento)
+      this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento)
     ).then((res: any) => {
       this.converterStringsParaDatas([res]);
       return res;
@@ -80,7 +80,7 @@ export class LancamentoService {
   }
 
   async buscarPorCodigo(codigo: number) {
-    return await lastValueFrom(this.http.get(`${this.url}/${codigo}`)).then(
+    return await lastValueFrom(this.http.get(`${this.lancamentosUrl}/${codigo}`)).then(
       (res: any) => {
         this.converterStringsParaDatas([res]);
         return res;
