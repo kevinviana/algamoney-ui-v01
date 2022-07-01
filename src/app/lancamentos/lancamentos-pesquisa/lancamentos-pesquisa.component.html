@@ -67,7 +67,7 @@
                 [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">{{ lancamento.valor | currency:'BRL':'symbol':'1.2-2' }}</span>
             </td>
             <td class="col-acoes">
-              <a class="edits" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/lancamentos', lancamento.codigo]" ></a>
+              <a class="edits" pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="[lancamento.codigo]" ></a>
               <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
                 (click)="confirmarExclusao(lancamento)" [disabled]="!temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
             </td>
@@ -77,7 +77,7 @@
 
     </div>
     <div class="col-12">
-      <a pButton label="Novo Lançamento" [routerLink]="['/lancamentos/novo']"></a>
+      <a pButton label="Novo Lançamento" [routerLink]="['novo']"></a>
     </div>
   </div>
 </div>
