@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -23,7 +23,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private formBuilder: FormBuilder
   ) {}
 
   tipos = [
@@ -32,7 +33,28 @@ export class LancamentoCadastroComponent implements OnInit {
   ];
   categorias = [];
   pessoas = [];
-  lancamento = new Lancamento();
+  // lancamento = new Lancamento();
+  formulario!: FormGroup;
+
+  configurarFormulario() {
+    this.formulario = this.formBuilder.group({
+      codigo: [],
+      tipo: ['RECEITA', Validators.required],
+      dataVencimento: [null, Validators.required],
+      dataPagamento: [],
+      descricao: [null, [Validators.required, Validators.minLength(5)]],
+      valor: [null, Validators.required],
+      pessoa: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: [],
+      }),
+      categoria: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: [],
+      }),
+      observacao: [],
+    });
+  }
 
   carregarCategorias() {
     return this.categoriaService
@@ -58,17 +80,17 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch((erro) => this.errorHandler.handle(erro));
   }
 
-  salvar(lancamentoForm: NgForm): void {
+  salvar(): void {
     if (this.editando) {
-      this.atualizarLancamento(lancamentoForm);
+      this.atualizarLancamento();
     } else {
-      this.adicionarLancamento(lancamentoForm);
+      this.adicionarLancamento();
     }
   }
 
-  adicionarLancamento(lancamentoForm: NgForm): void {
+  adicionarLancamento(): void {
     this.lancamentoService
-      .add(this.lancamento)
+      .add(this.formulario.value)
       .then((lancamento) => {
         this.messageService.add({
           severity: 'success',
@@ -79,11 +101,12 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch((erro) => this.errorHandler.handle(erro));
   }
 
-  atualizarLancamento(lancamentoForm: NgForm): void {
+  atualizarLancamento(): void {
     this.lancamentoService
-      .atualizar(this.lancamento)
+      .atualizar(this.formulario.value)
       .then((lancamento) => {
-        this.lancamento = lancamento;
+        // this.lancamento = lancamento;
+        this.formulario.setValue(lancamento);
         this.atualizarTituloEdicao();
         this.messageService.add({
           severity: 'success',
@@ -97,29 +120,29 @@ export class LancamentoCadastroComponent implements OnInit {
     this.lancamentoService
       .buscarPorCodigo(codigo)
       .then((lancamento) => {
-        this.lancamento = lancamento;
+        // this.lancamento = lancamento;
+        this.formulario.patchValue(lancamento);
         this.atualizarTituloEdicao();
       })
       .catch((erro) => this.errorHandler.handle(erro));
   }
 
   get editando() {
-    return Boolean(this.lancamento.codigo);
+    return Boolean(this.formulario.get('codigo')?.value);
   }
 
-  novo(lancamentoForm: NgForm) {
-    lancamentoForm.reset();
-
-    setTimeout(() => (this.lancamento = new Lancamento()), 1);
-
-    this.router.navigate(['/lancamentos/novo']);
+  novo() {
+    this.formulario.reset(new Lancamento());
+    // setTimeout(() => (this.lancamento = new Lancamento()), 1);
+    this.router.navigate(['novo']);
   }
 
   atualizarTituloEdicao(): void {
-    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
+    this.title.setTitle(`Edição de lançamento: ${this.formulario.get('descricao')?.value}`);
   }
 
   ngOnInit(): void {
+    this.configurarFormulario();
     this.title.setTitle('Novo Lançamento');
 
     const codigoLancamento = this.route.snapshot.params['codigo'];

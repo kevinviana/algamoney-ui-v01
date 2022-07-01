@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
@@ -29,6 +29,7 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
     ButtonModule,
     InputMaskModule,
     SharedModule,
+    ReactiveFormsModule,
     PessoasRoutingModule
   ],
 })
