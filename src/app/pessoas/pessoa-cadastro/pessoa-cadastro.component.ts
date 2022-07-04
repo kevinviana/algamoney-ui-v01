@@ -102,7 +102,7 @@ export class PessoaCadastroComponent implements OnInit {
 
     // setTimeout(() => (this.pessoa = new Pessoa()), 1);
 
-    this.router.navigate(['novo']);
+    this.router.navigate(['/pessoas/novo']);
   }
 
   ngOnInit(): void {

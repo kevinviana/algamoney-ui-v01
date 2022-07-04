@@ -134,7 +134,7 @@ export class LancamentoCadastroComponent implements OnInit {
   novo() {
     this.formulario.reset(new Lancamento());
     // setTimeout(() => (this.lancamento = new Lancamento()), 1);
-    this.router.navigate(['novo']);
+    this.router.navigate(['/lancamentos/novo']);
   }
 
   atualizarTituloEdicao(): void {
